@@ -1,133 +1,20 @@
 package tests;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductsPage;
-import provider.ProductsProvider;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ProductsTests {
 
-    public static List<String> allItems() {
-        List<String> toReturn  = new ArrayList<>();
+    /* Checking if the basket is empty
+    // Then
+    // Product setting in individual view (Single Product Page), adding to cart, and checking
+    // compare in cart: name, description, and price of product
+    */
 
-        toReturn.add("Sauce Labs Bike Light");
-        toReturn.add("Sauce Labs Onesie");
-        toReturn.add("Sauce Labs Fleece Jacket");
-        toReturn.add("Sauce Labs Backpack");
-        toReturn.add("Sauce Labs Bolt T-Shirt");
-        toReturn.add("Test.allTheThings() T-Shirt (Red)");
-
-        return toReturn;
-    }
-
-    @Test
-    public void verifySortProductByNameAZ() {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.openPage();
-        loginPage.setUserName("standard_user");
-        loginPage.setPassword("secret_sauce");
-        loginPage.clickLogin();
-
-        ProductsPage productsPage = new ProductsPage(driver);
-        productsPage.sortByName( "Name (A to Z)");
-
-        boolean isSortedByNameAZ = productsPage.isProductSortFromAZ();
-
-        if(isSortedByNameAZ) {
-            System.out.println("|| Sorting is as expected ||");
-        }
-        else {
-            System.out.println("|| Sorting is not as expected ||");
-        }
-
-        Assert.assertEquals(isSortedByNameAZ, true, "Products are not sorted as expected, from Name (A to Z)");
-
-        productsPage.close();
-    }
-
-    @Test
-    public void verifySortProductByNameZA() {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.openPage();
-        loginPage.setUserName("standard_user");
-        loginPage.setPassword("secret_sauce");
-        loginPage.clickLogin();
-
-        ProductsPage productsPage = new ProductsPage(driver);
-        productsPage.sortByName( "Name (Z to A)");
-
-        boolean isProductSortFromZA = productsPage.isProductSortFromZA();
-
-        if(isProductSortFromZA) {
-            System.out.println("|| Sorting is as expected ||");
-        }
-        else {
-            System.out.println("|| Sorting is not as expected ||");
-        }
-
-        Assert.assertEquals(isProductSortFromZA, true, "Products are not sorted as expected, from Name (Z to A)");
-
-        productsPage.close();
-    }
-
-
-    @Test
-    public void verifyTotalPriceProduct() {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.openPage();
-        loginPage.setUserName("standard_user");
-        loginPage.setPassword("secret_sauce");
-        loginPage.clickLogin();
-
-        ProductsPage productsPage = new ProductsPage(driver);
-
-        System.out.println("Number of Items in Cart before add: " + productsPage.productCountInCart());
-        Assert.assertEquals(productsPage.productCountInCart(), 0, "Product count is not equals");
-
-        productsPage.addProductToCartByName("Sauce Labs Backpack");
-        productsPage.addProductToCartByName("Sauce Labs Bike Light");
-        productsPage.addProductToCartByName("Sauce Labs Fleece Jacket");
-        productsPage.addProductToCartByName("Sauce Labs Onesie");
-        productsPage.addProductToCartByName("Sauce Labs Bolt T-Shirt");
-        productsPage.addProductToCartByName("Test.allTheThings() T-Shirt (Red)");
-
-        productsPage.openCart();
-        CartPage cartPage = new CartPage(driver);
-        cartPage.clickCheckout();
-        cartPage.setFirstName("Vladan");
-        cartPage.setLastName("Glisovic");
-        cartPage.setZip("11000");
-        cartPage.clickContinue();
-
-        System.out.println("Number of Items in Cart after add: " + productsPage.productCountInCart());
-        System.out.println("List of items in Cart: ");
-        cartPage.printNamesProductInCart();
-        System.out.println("**************************************************************************");
-        System.out.println("Total sum count in CartPage by APP: $" + cartPage.getTotalCount());
-        System.out.println("Total sum count in CartPage by QA:  $" + cartPage.sumTotalCount());
-
-        Assert.assertEquals(cartPage.getTotalCount(), cartPage.sumTotalCount(), "Product count is not equals");
-
-        cartPage.close();
-    }
     @Test
     public void verifyProductDescription() {
         System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
@@ -145,6 +32,7 @@ public class ProductsTests {
 
         System.out.println("Number of Items in Cart before add: " + productsPage.productCountInCart());
         Assert.assertEquals(productsPage.productCountInCart(), 0, "Product count is not equals");
+        System.out.println("***************************************************************************************");
 
         String NameProductInProductText = productsPage.getNameProductInProduct();
         String DescriptionProductInProductText = productsPage.getDescriptionProductInProduct();
@@ -165,9 +53,13 @@ public class ProductsTests {
         String DescriptionProductInCartText = cartPage.getDescriptionProductInCart();
         Double getPriceProductInCart = cartPage.getPriceProductInCart();
 
-        System.out.println("Name of single Product in Cart Page:         " + NameProductInProductText);
-        System.out.println("Description of single Product in Cart Page:  " + DescriptionProductInProductText);
+        System.out.println("Name of single Product in Cart Page:         " + NameProductInCartText);
+        System.out.println("Description of single Product in Cart Page:  " + DescriptionProductInCartText);
         System.out.println("Price of single Product in Cart Page:        $" + getPriceProductInCart);
+
+        System.out.println("***************************************************************************************");
+        System.out.println("Number of Items in Cart after add: " + productsPage.productCountInCart());
+        Assert.assertEquals(productsPage.productCountInCart(), 1, "Product count is not equals");
 
 
         Assert.assertEquals(NameProductInCartText, NameProductInProductText, "Product Name is not equals");
@@ -178,8 +70,14 @@ public class ProductsTests {
         cartPage.close();
     }
 
+
+     /* Checking if the basket is empty
+     // Then
+     // Product setting in inventory view (All Product Page), adding to cart, and checking
+     // compare in cart: name, description, and price of product
+     */
     @Test
-    public void verifySortProductByNameAZ_Array() {
+    public void verifyProductDescriptionAddProductToCartByName() {
         System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
 
@@ -190,98 +88,44 @@ public class ProductsTests {
         loginPage.clickLogin();
 
         ProductsPage productsPage = new ProductsPage(driver);
-        productsPage.sortByName( "Name (A to Z)");
 
-        boolean isSortedByNameAZ = productsPage.isProductSortFromAZ_Array();
+        System.out.println("Number of Items in Cart before add: " + productsPage.productCountInCart());
+        Assert.assertEquals(productsPage.productCountInCart(), 0, "Product count is not equals");
+        System.out.println("***************************************************************************************");
 
-        if(isSortedByNameAZ) {
-            System.out.println("|| Sorting is as expected ||");
-        }
-        else {
-            System.out.println("|| Sorting is not as expected ||");
-        }
+        String singleProductName = "Sauce Labs Bolt T-Shirt";
+        String NameProductInProductText =  productsPage.getNameProductInventoryPage(singleProductName);
+        String DescriptionProductInProductText = productsPage.getDescriptionProductInventoryPage(singleProductName);
+        Double getPriceProductInProduct = productsPage.getPriceProductInventoryPage(singleProductName);
 
-        Assert.assertEquals(isSortedByNameAZ, true, "Products are not sorted as expected, from Name (A to Z)");
+        System.out.println("Name of Product take from inventory page:         " + NameProductInProductText);
+        System.out.println("Description of take from inventory page:          " + DescriptionProductInProductText);
+        System.out.println("Price of Product take from inventory page:       $" + getPriceProductInProduct);
+        System.out.println("***************************************************************************************");
 
-        productsPage.close();
+        productsPage.addProductToCartByName(singleProductName);
+        productsPage.openCart();
+
+        CartPage cartPage = new CartPage(driver);
+
+
+        String NameProductInCartText = cartPage.getNameProductInCart();
+        String DescriptionProductInCartText = cartPage.getDescriptionProductInCart();
+        Double getPriceProductInCart = cartPage.getPriceProductInCart();
+
+        System.out.println("Name of single Product in Cart Page:         " + NameProductInCartText);
+        System.out.println("Description of single Product in Cart Page:  " + DescriptionProductInCartText);
+        System.out.println("Price of single Product in Cart Page:        $" + getPriceProductInCart);
+
+        System.out.println("***************************************************************************************");
+        System.out.println("Number of Items in Cart after add: " + productsPage.productCountInCart());
+        Assert.assertEquals(productsPage.productCountInCart(), 1, "Product count is not equals");
+
+        Assert.assertEquals(NameProductInCartText, NameProductInProductText, "Product Name is not equals");
+        Assert.assertEquals(DescriptionProductInProductText, DescriptionProductInCartText, "Product Description is not equals");
+        Assert.assertEquals(getPriceProductInProduct, getPriceProductInCart, "Product Price is not equals");
+
+
+        cartPage.close();
     }
-
-    @Test
-    public void verifySortProductByNameZA_Array() {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.openPage();
-        loginPage.setUserName("standard_user");
-        loginPage.setPassword("secret_sauce");
-        loginPage.clickLogin();
-
-        ProductsPage productsPage = new ProductsPage(driver);
-        productsPage.sortByName( "Name (Z to A)");
-
-        boolean isSortedByNameAZ = productsPage.isProductSortFromZA_Array();
-
-        if(isSortedByNameAZ) {
-            System.out.println("|| Sorting is as expected ||");
-        }
-        else {
-            System.out.println("|| Sorting is not as expected ||");
-        }
-
-        Assert.assertEquals(isSortedByNameAZ, true, "Products are not sorted as expected, from Name (A to Z)");
-
-        productsPage.close();
-    }
-
-
-    @Test
-    public void verifySortProductByNameAZ_Array_compare() {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.openPage();
-        loginPage.setUserName("standard_user");
-        loginPage.setPassword("secret_sauce");
-        loginPage.clickLogin();
-
-        ProductsPage productsPage = new ProductsPage(driver);
-        List actual = productsPage.isProductSortFromAZ_Array_ListString_Actual();
-        Collections.sort(actual);
-        System.out.println("|| actual: || " + actual);
-        productsPage.sortByName( "Name (A to Z)");
-        List sorted = productsPage.isProductSortFromAZ_Array_ListString_Actual();
-        System.out.println("|| sorted: || " + sorted);
-
-        Assert.assertEquals(actual, sorted, "Products are not sorted as expected, from Name (A to Z)");
-
-        productsPage.close();
-    }
-
-    @Test
-    public void verifySortProductByNameZA_Array_compare() {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.openPage();
-        loginPage.setUserName("standard_user");
-        loginPage.setPassword("secret_sauce");
-        loginPage.clickLogin();
-
-        ProductsPage productsPage = new ProductsPage(driver);
-        List actual = productsPage.isProductSortFromAZ_Array_ListString_Actual();
-        Collections.sort(actual, Collections.reverseOrder());
-        System.out.println("|| actual_reverseOrder: || " + actual);
-        productsPage.sortByName( "Name (Z to A)");
-        List sorted = productsPage.isProductSortFromAZ_Array_ListString_Actual();
-        System.out.println("|| sorted_reverseOrder: || " + sorted);
-
-        Assert.assertEquals(actual, sorted, "Products are not sorted as expected, from Name (Z to A)");
-
-        productsPage.close();
-    }
-
-
 }
