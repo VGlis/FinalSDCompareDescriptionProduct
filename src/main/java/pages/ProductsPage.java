@@ -85,6 +85,10 @@ public class ProductsPage {
 
     }
 
+    /*
+    Second Test
+     */
+
     public void addProductToCartByName(String productName) {
         WebElement container = driver.findElement(By.id("inventory_container"));
 

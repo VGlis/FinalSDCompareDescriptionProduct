@@ -11,12 +11,11 @@ public class ProductsTests {
 
     /* Checking if the basket is empty
     // Then
-    // Product setting in individual view (Single Product Page), adding to cart, and checking
+    // Product setting in individual view (Single Product Page), adding to cart By BUTTON, and checking
     // compare in cart: name, description, and price of product
     */
-
     @Test
-    public void verifyProductDescription() {
+    public void verifyProductDescriptionIndividualView() {
         System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
 
@@ -73,11 +72,11 @@ public class ProductsTests {
 
      /* Checking if the basket is empty
      // Then
-     // Product setting in inventory view (All Product Page), adding to cart, and checking
+     // Product setting in inventory view (All Product Page), adding to cart by PRODUCT NAME, and checking
      // compare in cart: name, description, and price of product
      */
     @Test
-    public void verifyProductDescriptionAddProductToCartByName() {
+    public void verifyProductDescriptionInventoryView() {
         System.setProperty("webdriver.chrome.driver","C:\\Users\\Vladan\\Downloads\\chromedriver_win32\\chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
 
