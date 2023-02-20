@@ -1,16 +1,8 @@
 package pages;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import java.math.RoundingMode;
-import java.math.BigDecimal;
 
-
-import java.io.Console;
-import java.util.Scanner;
-
-import java.util.List;
 
 public class CartPage {
 

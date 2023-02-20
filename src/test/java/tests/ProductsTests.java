@@ -25,6 +25,7 @@ public class ProductsTests {
         loginPage.setPassword("secret_sauce");
         loginPage.clickLogin();
 
+        // add-to-single-view-sauce-labs-backpack
         loginPage.clickProductLinkTextSauceLabsBackpack();
 
         ProductsPage productsPage = new ProductsPage(driver);
@@ -41,6 +42,7 @@ public class ProductsTests {
         System.out.println("Description of Product in Single Item:  " + DescriptionProductInProductText);
         System.out.println("Price of Product in Single Item:        $" + getPriceProductInProduct);
 
+        // add-to-cart-sauce-labs-backpack
         productsPage.clickAddCartFromSingleProduct();
         productsPage.openCart();
 
